@@ -1,9 +1,9 @@
-import SignIn from "./uiComponents/auth/signIn"
+import AuthPage from "./uiComponents/auth/authPage"
 
 function App() {
   return (
     <div className="App">
-      <SignIn />
+      <AuthPage />
     </div>
   )
 }

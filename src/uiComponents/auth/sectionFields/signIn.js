@@ -17,17 +17,13 @@ export const signIn = {
     },
     {
       id: "multiField",
-      name: "multiField",
+      type: "multiField",
       input: [
         {
           name: "Show Password",
           id: "password",
           type: "checkbox",
-          width: "40%",
-        },
-        {
-          id: "",
-          width: "20%",
+          width: "60%",
         },
         {
           name: "Forgot Password",
@@ -38,5 +34,5 @@ export const signIn = {
       ],
     },
   ],
-  button: "Sign In",
+  button: "Login",
 };
