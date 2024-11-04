@@ -1,7 +1,9 @@
+import AuthPage from "./uiComponents/auth/authPage"
+
 function App() {
   return (
     <div className="App">
-     hi
+      <AuthPage />
     </div>
   )
 }
