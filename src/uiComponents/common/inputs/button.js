@@ -1,6 +1,11 @@
 import React from 'react'
-import { Button } from '@mui/material'
+import { Button, colors } from '@mui/material'
 import { iconBank } from '../../../assets/icons'
+
+const commonStyles = (disabled) => ({
+    opacity: disabled ? 0.5 : 1,
+    cursor: disabled ? "not-allowed" : "pointer"
+})
 
 function CustomButton(props) {
 
@@ -30,15 +35,11 @@ function CustomButton(props) {
                 onClick={handleOnClick}
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
-                style={{
-                    ...style.button,
-                    opacity: disabled ? 0.5 : 1,
-                    cursor: disabled ? "not-allowed" : "pointer"
-                }}
-                startIcon={iconBank[startIcon]}
-                endIcon={iconBank[endIcon]}
+                style={{ ...style, ...commonStyles(disabled) }}
+                startIcon={iconBank[startIcon]?.()}
+                endIcon={iconBank[endIcon]?.({ color: '#fff' })}
             >
-                <span style={{ ...style.text }}>{text}</span>
+                <span >{text}</span>
 
             </Button>
         </>

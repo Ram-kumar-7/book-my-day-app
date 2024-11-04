@@ -7,15 +7,17 @@ export const forgotPwd = {
             id: "userId",
             type: "textField",
             width: "100%",
+            inputProps: {
+                propsName: 'endAdornment',
+                value: 'Re-send Otp',
+            }
         },
         {
             id: "multiField",
             type: "multiField",
             input: [
                 {
-                    name: "Re-type E-mail Id",
-                    id: "password",
-                    type: "checkbox",
+                    type: 'empty',
                     width: "80%",
                 },
                 {
@@ -23,39 +25,18 @@ export const forgotPwd = {
                     id: "password",
                     type: "textButton",
                     width: "10%",
+                    onClickStateValue: 'signIn'
                 },
             ],
         },
         {
-            id: "multiField",
-            type: "optButton",
-            // input: [
-            //   {
-            //     name: "Show Password",
-            //     id: "opt1",
-            //     type: "textField",
-            //     width: "15%",
-            //   },
-            //   {
-            //     name: "Show Password",
-            //     id: "opt2",
-            //     type: "textField",
-            //     width: "15%",
-            //   },
-            //   {
-            //     name: "Show Password",
-            //     id: "opt3",
-            //     type: "textField",
-            //     width: "15%",
-            //   },
-            //   {
-            //     name: "Show Password",
-            //     id: "opt4",
-            //     type: "textField",
-            //     width: "15%",
-            //   },
-            // ],
-        },
+            type: 'optButton'
+        }
     ],
-    button: "Login",
+    button: {
+        value: 'Send Otp',
+        width: '100%',
+        defaultIcon: 'sendIcon',
+        onClickIcon: 'loadingIcon'
+    },
 };

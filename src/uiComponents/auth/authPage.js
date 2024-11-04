@@ -1,11 +1,12 @@
-import { React, useState } from "react";
-import { Box, Button, Checkbox, Grid, TextField, Typography } from "@mui/material";
-import { makeStyles, useTheme } from "@mui/styles";
+import { React, useEffect, useState } from "react";
+import { Box, Checkbox, Grid, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import signIn from "../../assets/signIn.svg";
 import { getSectionFields } from "./sectionFields";
-// import CustomButton from "../common/inputs/button";
+import CustomButton from "../common/inputs/button";
 import { iconBank } from "../../assets/icons";
 import OtpButton from "../common/inputs/otpButton";
+import CustomTextField from "../common/inputs/textField";
 
 const commonStyles = {
     displayProperty: {
@@ -24,25 +25,21 @@ const commonStyles = {
         display: "flex",
         alignItems: "flex-end",
     },
-    textField: {
-        "& .MuiInput-underline:before": {
-            borderBottomColor: "green",
-        },
-        "& .MuiInput-underline:after": {
-            borderBottomColor: "purple",
-        },
-        "& .MuiInputLabel-root": {
-            color: "gray",
-        },
-        "& .MuiInputLabel-root.Mui-focused": {
-            color: "purple", 
-        },
+    buttonStyle: {
+        background: "rgb(246 103 1 / 89%)",
+        width: '100%',
+        color: '#fff',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        borderRadius: '7px',
+        marginTop: '20px',
+        opacity: '0.5 !important'
+
     }
-};
+}
 
 const useStyles = makeStyles(() => ({
     signInMainContainer: {
-
         position: 'relative',
         backgroundColor: "#1336EF",
         height: "100vh",
@@ -56,7 +53,7 @@ const useStyles = makeStyles(() => ({
         width: "72%",
         borderRadius: "1.9%",
         borderTopLeftRadius: "20%",
-  borderBottomRightRadius: "20%",
+        borderBottomRightRadius: "20%",
         ...commonStyles.displayProperty,
     },
     signInInnerLeftGrid: {
@@ -83,17 +80,38 @@ const useStyles = makeStyles(() => ({
         fontWeight: "900 !important",
         fontSize: "150% !important",
     },
-}));
+}))
 
 function AuthPage() {
     const classes = useStyles()
-    const [authPage, setAuthPage] = useState("signIn")
-    const field = getSectionFields(authPage)
+    const [authPage, setAuthPage] = useState("updatePwd")
+    const [field, setField] = useState(getSectionFields(authPage))
+    const [buttonOnClicked, setButtonOnClicked] = useState(false)
+    const [reSendOtp, setReSendOtp] = useState(false)
+    const [reSendOtpLoading, setReSendOtpLoading] = useState(false)
+
 
     const [showPassword, setShowPassword] = useState(false)
 
+    useEffect(() => {
+        setField(getSectionFields(authPage))
+        setButtonOnClicked(false)
+        setReSendOtp(false)
+        setReSendOtpLoading(false)
+    }, [authPage])
+
     const handleCheckboxChange = (event) => {
         setShowPassword(event.target.checked)
+    }
+
+
+    const handleReSendOtp = () => {
+        setReSendOtpLoading(true)
+    }
+
+    const handleOnClick = () => {
+        setButtonOnClicked(true)
+        setReSendOtp(true)
     }
 
     return (
@@ -102,14 +120,12 @@ function AuthPage() {
                 <Box className={classes.signInInnerContainer}>
                     <Grid xs={6} className={classes.signInInnerLeftGrid}>
                         <img src={signIn} height="70%" draggable={false} loading={"lazy"} />
-                        <Typography className={classes.signInProductName}>
-                            Book My Bill
-                        </Typography>
+                        <Typography className={classes.signInProductName}>Book My Bill</Typography>
                         <Typography>Your Billing, Your Way – Streamlined.</Typography>
                     </Grid>
                     <Box className={classes.signInInnerRightGrid}>
                         <Typography style={{ ...commonStyles.authTitle }}>{field.title}</Typography>
-                        <Grid style={{ ...commonStyles.displayProperty, flexDirection: "column" }}>
+                        <Grid style={{ ...commonStyles.displayProperty, flexDirection: "column", }}>
                             {field.body?.map((fieldObj, index) => (
                                 <>
                                     {(() => {
@@ -117,25 +133,23 @@ function AuthPage() {
                                             case "textField":
                                                 return (
                                                     <Box sx={{ width: fieldObj.width, ...commonStyles.boxStyle }}>
-                                                        {iconBank.emailIcon({ color: "action.active", mr: 1, my: 0.5 })}
-                                                        <TextField
-                                                            sx={{ width: fieldObj.width, ...commonStyles.textField }}
+                                                        {iconBank.emailIcon({ color: "orange !important", mr: 1, my: 0.5 }, { width: '24px', height: '24px' })}
+                                                        <CustomTextField
                                                             id={fieldObj.id}
                                                             label={fieldObj.labelName}
-                                                            variant="standard"
+                                                            inputProps={reSendOtp ? { ...fieldObj.inputProps, onClick: handleReSendOtp } : ''}
+                                                            loading={reSendOtpLoading}
                                                         />
                                                     </Box>
                                                 );
                                             case "password":
                                                 return (
                                                     <Box sx={{ width: fieldObj.width, ...commonStyles.boxStyle }}>
-                                                        {iconBank.lockIcon({ color: "action.active", mr: 1, my: 0.5 })}
-                                                        <TextField
-                                                            style={{ width: fieldObj.width }}
+                                                        {iconBank.lockIcon({ color: "orange", mr: 1, my: 0.5 }, { width: '24px', height: '24px' })}
+                                                        <CustomTextField
                                                             type={showPassword ? "text" : "password"}
                                                             id={fieldObj.id}
                                                             label={fieldObj.labelName}
-                                                            variant="standard"
                                                         />
                                                     </Box>
                                                 );
@@ -150,7 +164,7 @@ function AuthPage() {
                                                             switch (fieldObjInput.type) {
                                                                 case 'checkbox':
                                                                     return (
-                                                                        <Box key={subIndex} sx={{ display: "flex", alignItems: "center", width: fieldObjInput.width, padding: '25px 0' }}>
+                                                                        <Box key={subIndex} sx={{ display: "flex", alignItems: "center", width: fieldObjInput.width, padding: '5px 0' }}>
                                                                             <Checkbox
                                                                                 style={{ transform: "scale(0.8)", padding: '5px !important' }}
                                                                                 checked={showPassword}
@@ -163,8 +177,12 @@ function AuthPage() {
                                                                 case 'textButton':
                                                                     return (
                                                                         <Box key={subIndex} sx={{ display: "flex", alignItems: "center", width: fieldObjInput.width }}>
-                                                                            <Typography onClick={() => setAuthPage("forgotPwd")} style={{ textDecoration: 'underline', cursor: 'pointer', color: 'rgb(246 103 1 / 89%)', fontSize: '14px', justifyContent: 'end' }} >{fieldObjInput.name}</Typography>
+                                                                            <Typography onClick={() => setAuthPage(fieldObjInput.onClickStateValue)} style={{ textDecoration: 'underline', cursor: 'pointer', color: 'rgb(246 103 1 / 89%)', fontSize: '14px', justifyContent: 'end' }} >{fieldObjInput.name}</Typography>
                                                                         </Box>
+                                                                    )
+                                                                case 'empty':
+                                                                    return (
+                                                                        <Box key={subIndex} sx={{ width: fieldObjInput.width }} />
                                                                     )
                                                                 default:
                                                                     return null
@@ -179,11 +197,14 @@ function AuthPage() {
                                 </>
                             ))}
                         </Grid>
-                        <Button style={{ background: "rgb(246 103 1 / 89%)", width: '100%', color: '#fff', fontSize: '16px', fontWeight: 'bold', borderRadius: '7px', marginTop: '20px' }} endIcon={iconBank.loginIcon}>{field.button}</Button>
-                        {/* <CustomButton
-                    text={field.button}
-                    endIcon={"loginIcon"}
-                /> */}
+                        <CustomButton
+                            style={{ ...commonStyles.buttonStyle }}
+                            text={field.button.value}
+                            endIcon={buttonOnClicked ? field.button.onClickIcon : field.button.defaultIcon}
+                            value={field.button.value}
+                            onClick={handleOnClick}
+                            disabled={buttonOnClicked}
+                        />
                     </Box>
 
                 </Box>

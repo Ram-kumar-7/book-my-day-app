@@ -1,38 +1,44 @@
 export const signIn = {
-  title: "Sign in to your account",
-  body: [
-    {
-      labelName : "Email Id",
-      placeholder: "Enter email Id",
-      id: "userId",
-      type: "textField",
-      width: "100%",
-    },
-    {
-      labelName : "Password",
-      placeholder: "Enter Password",
-      id: "password",
-      type: "password",
-      width: "100%",
-    },
-    {
-      id: "multiField",
-      type: "multiField",
-      input: [
+    title: "Sign in to your account",
+    body: [
         {
-          name: "Show Password",
-          id: "password",
-          type: "checkbox",
-          width: "60%",
+            labelName: "Email Id",
+            placeholder: "Enter email Id",
+            id: "userId",
+            type: "textField",
+            width: "100%",
         },
         {
-          name: "Forgot Password",
-          id: "password",
-          type: "textButton",
-          width: "40%",
+            labelName: "Password",
+            placeholder: "Enter Password",
+            id: "password",
+            type: "password",
+            width: "100%",
         },
-      ],
+        {
+            id: "multiField",
+            type: "multiField",
+            input: [
+                {
+                    name: "Show Password",
+                    id: "password",
+                    type: "checkbox",
+                    width: "60%",
+                },
+                {
+                    name: "Forgot Password",
+                    id: "password",
+                    type: "textButton",
+                    width: "40%",
+                    onClickStateValue: 'forgotPwd'
+                },
+            ],
+        },
+    ],
+    button: {
+        value: 'Sigin',
+        width: '100%',
+        onClickIcon: 'loadingIcon',
+        defaultIcon: 'loginIcon'
     },
-  ],
-  button: "Login",
-};
+}

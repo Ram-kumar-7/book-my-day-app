@@ -1,4 +1,4 @@
-import { createPwd } from "./createPwd.js";
+import { updatePassword } from "./createPwd.js";
 import { forgotPwd } from "./forgotPwd.js"
 import { signIn } from "./signIn.js"
 
@@ -8,8 +8,8 @@ export const getSectionFields = (req) => {
             return signIn;
         case 'forgotPwd':
             return forgotPwd;
-        case 'createPwd':
-            return createPwd
+        case 'updatePwd':
+            return updatePassword
         default:
             return signIn
     }

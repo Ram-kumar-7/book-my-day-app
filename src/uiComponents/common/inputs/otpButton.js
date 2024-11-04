@@ -20,7 +20,7 @@ function OtpButton(props) {
     }
 
     return (
-        <Box style={{ width:'100% !impoartant', display: 'flex', justifyContent:'space-evenly',}}>
+        <Box style={{ width:'100% !impoartant', margin:'20px 0' }}>
             {Array.from({ length: boxCount }).map((_, index) => (
                 <TextField
                     inputRef={(event) => (inputRefs.current[index] = event)}
@@ -29,6 +29,7 @@ function OtpButton(props) {
                     id={`textField-${index}`}
                     sx={{
                         width: '40px',
+                        margin: '0 20px',
                         '& .MuiInputBase-root': {
                             height: '40px',
                             transition: 'all 0.3s ease',
